@@ -14,5 +14,6 @@ RUN chmod a+x /docker-buildx
 
 ARG DOCKER_VERSION
 FROM docker:${DOCKER_VERSION}
+RUN apk update && apk upgrade && apk add --no-cache bash git openssh
 
 COPY --from=fetcher /docker-buildx /usr/lib/docker/cli-plugins/docker-buildx
