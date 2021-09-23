@@ -1,7 +1,7 @@
 ARG BUILDX_VERSION=0.4.2
 ARG DOCKER_VERSION=latest
 
-FROM alpine AS fetcher
+FROM rycus86/arm64v8-alpine-qemu AS fetcher
 
 RUN apk add curl
 
@@ -13,7 +13,9 @@ RUN curl -L \
 RUN chmod a+x /docker-buildx
 
 ARG DOCKER_VERSION
+
 FROM docker:${DOCKER_VERSION}
+
 RUN apk update && apk upgrade && apk add --no-cache bash git openssh
 
 COPY --from=fetcher /docker-buildx /usr/lib/docker/cli-plugins/docker-buildx
